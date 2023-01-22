@@ -20,70 +20,85 @@ class LabController extends Controller
         $labs = ambil_semuadata('lab');
         return view('lab.index',['labs'=> $labs],['metadatas'=>$metadatas]);  
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function tambah_lab () 
+    {    
+        $metadatas = ambil_satudata('metadata',8);
+        return view('lab.tambah',['metadatas'=>$metadatas]);   
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    
+       public function simpan_lab(Request $request)
+    { 
+        $this->validate($request, [
+            'nama_lab' => 'required|min:4|max:25',
+            'harga' => 'required|numeric|digits_between:1,7',
+            'satuan' => 'required|max:10',
+        ]);
+        DB::table('lab')->insert([
+            'nama' => $request->nama_lab,
+            'harga' => $request->harga,
+            'satuan' => $request->satuan,
+            'created_time' => Carbon::now(),
+            'updated_time' => Carbon::now(),
+        ]);
+           $ids= DB::table('lab')->orderby('id','desc')->first();         
+            switch($request->simpan) {
+                case 'simpan': 
+                    $buka=url('lab/edit/'. $ids->id);
+                    $pesan='Data lab berhasil disimpan!';
+                break;             
+                case 'simpan_baru': 
+                    $buka=route('lab.tambah');
+                    $pesan='Data lab berhasil disimpan!';
+                break;
+            }
+        return redirect($buka)->with('pesan',$pesan);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+        //Proses Update Pasien
+        public function update_lab(Request $request)
     {
-        //
+            $this->validate($request, [
+                'nama_lab' => 'required|min:4|max:25',
+                'harga' => 'required|numeric|digits_between:1,7',
+                'satuan' => 'required|max:10',
+            ]);
+            
+            DB::table('lab')->where('id',$request->id)->update([
+                'nama' => $request->nama_lab,
+                'harga' => $request->harga,
+                'satuan' => $request->satuan,
+                'updated_time' => Carbon::now()
+            ]);
+     
+            switch($request->simpan) {
+                 case 'simpan':
+                    $buka='/lab/edit/'.$request->id;
+                    $pesan='Data pasien berhasil disimpan!';
+                break;           
+                case 'simpan_baru': 
+                    $buka='/lab/tambah';
+                    $pesan='Data pasien berhasil disimpan!';
+                break;
+            }
+        return redirect($buka)->with('pesan',$pesan);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    
+    public function edit_lab($id)
     {
-        //
+        $metadatas = ambil_satudata('metadata',9);
+        $datas= ambil_satudata('lab',$id);
+        if ($datas->count() <= 0) {
+            return abort(404, 'Halaman Tidak Ditemukan.');
+        }
+        return view('lab.edit',['metadatas'=>$metadatas],['datas'=>$datas]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    
+    public function hapus_lab($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        DB::table('lab')->where('id',$id)->update([
+            'deleted' => 1,
+        ]);
+        $pesan="Data lab berhasil dihapus!";
+        return redirect(route("lab"))->with('pesan',$pesan);
     }
 }

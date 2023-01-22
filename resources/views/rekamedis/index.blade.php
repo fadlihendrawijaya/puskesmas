@@ -59,19 +59,19 @@
                                 @endif
                             </td>
                             <td width="120px">
-                                {{-- <a href="{{route('rm.edit', $rm->id)}}" class="btn btn-warning btn-sm btn-icon-split"> --}}
+                                <a href="{{url('rekamedis/edit/'. $rm->id)}}" class="btn btn-warning btn-sm btn-icon-split">
                                     <span class="icon">
                                         <i style="padding-top:4px"class="fas fa-pen"></i>
                                     </span>
                                     <span class="text">Edit</span>
                                 </a>
-                                {{-- <a href="{{route('rm.lihat', $rm->id)}}" class="btn btn-success btn-sm btn-icon-split"> --}}
+                                <a href="{{route('rekamedis.lihat', $rm->id)}}" class="btn btn-success btn-sm btn-icon-split">
                                     <span class="icon">
                                         <i style="padding-top:4px"class="fas fa-eye"></i>
                                     </span>
                                     <span class="text">Lihat</span>
                                 </a>
-                                {{-- <a href="{{route('tagihan', $rm->id)}}" class="btn btn-secondary btn-sm btn-icon-split"> --}}
+                                <a href="{{route('rekamedis.tagihan', $rm->id)}}" class="btn btn-secondary btn-sm btn-icon-split">
                                     <span class="icon">
                                         <i style="padding-top:4px"class="fas fa-cart-plus"></i>
                                     </span>

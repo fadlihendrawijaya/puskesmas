@@ -10,13 +10,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css" rel="stylesheet')}}" type="text/css">
     <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    href="{{asset('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')}}"
     rel="stylesheet">
     
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -59,8 +59,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"></h6>
-                        <a class="collapse-item" href="{{route ('pasien.index')}}">Daftar Pasien</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="{{route ('pasien')}}">Daftar Pasien</a>
+                        <a class="collapse-item" href="{{route ('pasien.tambah')}}">Tambah Pasien</a>
                     </div>
                 </div>
             </li>
@@ -76,8 +76,8 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"></h6>
-                <a class="collapse-item" href="{{route ('obat.index')}}">Daftar Obat</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
+                <a class="collapse-item" href="{{route ('obat')}}">Daftar Obat</a>
+                <a class="collapse-item" href="{{route ('obat.tambah')}}">Tambah Obat</a>
             </div>
         </div>
     </li>
@@ -92,8 +92,8 @@
     data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header"></h6>
-        <a class="collapse-item" href="{{route ('lab.index')}}">Daftar Lab</a>
-        <a class="collapse-item" href="utilities-border.html">Borders</a>
+        <a class="collapse-item" href="{{route ('lab')}}">Daftar Lab</a>
+        <a class="collapse-item" href="{{route ('lab.tambah')}}">Tambah Lab</a>
     </div>
 </div>
 </li> 
@@ -108,8 +108,10 @@
 data-parent="#accordionSidebar">
 <div class="bg-white py-2 collapse-inner rounded">
     <h6 class="collapse-header"></h6>
-    <a class="collapse-item" href="{{route ('rekamedis.index')}}">Daftar Rekam Medis</a>
-    <a class="collapse-item" href="utilities-border.html">Borders</a>
+    <a class="collapse-item" href="{{route ('rekamedis')}}">Daftar Rekam Medis</a>
+    <a class="collapse-item" href="{{route ('rekamedis.tambah')}}">Tambah Rekam Medis</a>
+    {{-- <a class="collapse-item" href="{{route ('rekamedis.lihat')}}">Lihat Rekam Medis</a> --}}
+    {{-- <a class="collapse-item" href="{{route ('rekamedis.list')}}">List Rekam Medis</a> --}}
 </div>
 </div>
 </li>
@@ -176,7 +178,7 @@ data-parent="#accordionSidebar">
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
         <img class="img-profile rounded-circle"
-        src="img/undraw_profile.svg">
+        src="{{asset('img/undraw_profile.svg')}}">
     </a>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -205,67 +207,15 @@ data-parent="#accordionSidebar">
 </div>
 </div>
 </div>
-
-
-{{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-                
-            </ul>
-            
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
-                @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-                @if (Route::has('register'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                </li>
-                @endif
-                @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
-                    
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-                    
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </li>
-            @endguest
-        </ul>
-    </div>
-</div>
-</nav> --}}
 </div>
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 </body>
 </html>
